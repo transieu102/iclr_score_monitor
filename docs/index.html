@@ -199,9 +199,13 @@ function cdfChart(host, data, { w = 480, h = 240, name, unit, describe, xStep })
     const px = cur ? X(cur.v) : m.l, py = Y(cur ? cur.p : 0);
     guide.setAttribute("x1", px); guide.setAttribute("x2", px); guide.setAttribute("visibility", "visible");
     mark.setAttribute("cx", px); mark.setAttribute("cy", py); mark.setAttribute("visibility", "visible");
+    const total = pts[pts.length - 1].n;
+    const topCount = cur ? total - cur.n + cur.c : total;
+    const topShare = topCount / total;
+
     tipEl.textContent = cur
-      ? `${name} ≤ ${+cur.v.toFixed(2)}: ${pct(cur.p)} of ${unit} (${fmt(cur.n)}); above: ${pct(1 - cur.p)}`
-      : `${name} below ${+lo.toFixed(2)}: 0% of ${unit}`;
+      ? `${name} ≥ ${+cur.v.toFixed(2)}: Top ${pct(topShare)} (${fmt(topCount)} ${unit})`
+      : `${name} ≥ ${+lo.toFixed(2)}: Top 100%`;
     tipEl.style.display = "block";
     tipEl.style.left = Math.max(8, Math.min(e.clientX + 12, innerWidth - tipEl.offsetWidth - 8)) + "px";
     tipEl.style.top = (e.clientY - 38) + "px";

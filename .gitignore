@@ -9,3 +9,11 @@ __pycache__/
 .DS_Store
 .env
 /notes/
+
+.venv/
+snapshots/
+notes/
+.env
+*.env
+*.log
+__pycache__/
